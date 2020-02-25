@@ -1,4 +1,5 @@
-create table PERSON (
-    ID int not null,
-    NAME varchar(100) not null
+create table patent (
+    publication_number VARCHAR(255) NOT NULL PRIMARY KEY,
+    publication_date DATE NOT NULL,
+    title VARCHAR(255) NOT NULL
 );
