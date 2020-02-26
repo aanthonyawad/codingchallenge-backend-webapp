@@ -39,7 +39,7 @@ Our users need to add their own patents to the system. We have the `R` of CRUD b
 * Add new endpoints to the `PatentController` so we can create new patent entries, or update/delete existing ones. Make sure to use the best practices of RESTful API design, to return sensible responses, and the correct status codes as required. You should also add integration and unit tests as needed.
 
 ### 3. Handle Declarations
-One interesting aspect of industrial or technology Standards is how they are composed. Companies or organisations typically work with a standard-setting organisation (like ISO or ETSI) to "declare" their patent to be a necessary part of a standard. So there is a relational connection between patents and standards, which we can model as a "declaration".
+One interesting aspect of industrial or technology standards is how they are composed. Companies or organisations typically work with a standard-setting organisation (like ISO or ETSI) to "declare" their patent to be a necessary part of a standard. So there is a relational connection between patents and standards, which we can model as a "declaration".
 
 * Create a SQL model for a declaration, and include the appropriate foreign key relationships. (It's important not to change the existing SQL model, but to extend from it).
 
