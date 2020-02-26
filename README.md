@@ -50,4 +50,4 @@ One interesting aspect of industrial or technology standards is how they are com
 ## How to submit
 Once you're happy with your work and want to submit, `zip` the repo folder and submit it via email to our HR manager. Remember to include the whole assignment directory (including hidden files), so we can see your git commit history.
 
-Best of luck!
+Best of luck and thanks for taking the time to complete this challenge.
