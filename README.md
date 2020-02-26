@@ -16,6 +16,8 @@ Fork this repo and clone it to your local environment. You will have a fully wor
 
 The repo also contains some SQL scripts managed with Flyway, to manage our data model and contents. Data is stored in an in-memory H2 database which is recreated when the application starts up, so you don't need to configure anything external.
 
+Run it from the entry point in the class `CodingchallengeBackendWebappApplication`.
+
 ## What we want you to do
 
 You must solve a few small challenges in order to pass our test. In addition to doing the tasks below, we want to see that you can:
