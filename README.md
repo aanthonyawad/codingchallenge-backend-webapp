@@ -12,7 +12,7 @@ We want to know how well you can work with the following:
 * Written and generated documentation
 
 ## What we provide you
-Fork this repo and clone it to your local environment. You will have a fully working Spring Boot webapp, which you can run and access at http://localhost:8080 to use a very simple API. Make a `GET` request to http://localhost:8080/patents/US1234A1 to load a dummy patent we created for you to get started.
+Fork this repo or clone it to your local environment. You will have a fully working Spring Boot webapp, which you can run and access at http://localhost:8080 to use a very simple API. Make a `GET` request to http://localhost:8080/patents/US1234A1 to load a dummy patent we created for you to get started.
 
 The repo also contains some SQL scripts managed with Flyway, to manage our data model and contents. Data is stored in an in-memory H2 database which is recreated when the application starts up, so you don't need to configure anything external.
 
@@ -46,3 +46,8 @@ One interesting aspect of industrial or technology standards is how they are com
 * Create a SQL model for a declaration, and include the appropriate foreign key relationships. (It's important not to change the existing SQL model, but to extend from it).
 
 * Create new endpoint(s) which let a user declare their patent(s) to be part of a standard. As in the previous task, ensure that appropriate responses and status codes are returned.
+
+## How to submit
+Once you're happy with your work and want to submit, `zip` the repo folder and submit it via email to our HR manager. Remember to include the whole assignment directory (including hidden files), so we can see your git commit history.
+
+Best of luck!
