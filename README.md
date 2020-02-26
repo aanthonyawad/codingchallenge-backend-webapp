@@ -29,7 +29,7 @@ You must solve a few small challenges in order to pass our test. In addition to 
 Here are your tasks:
 
 ### 1. Fix an endpoint bug
-There is a bug in the `/patents` GET endpoint. When we request a patent that we don't have in our database (For example, http://localhost:8080/patents/I-DO-NOT-EXIST ), the endpoint should return a `404 NOT FOUND` but that's not working. Instead we see a `500 INTERNAL SERVER ERROR`.
+There is a bug in the `/patents/{publicationNumber}` GET endpoint. When we request a patent that we don't have in our database (For example, http://localhost:8080/patents/I-DO-NOT-EXIST ), the endpoint should return a `404 NOT FOUND` but that's not working. Instead we see a `500 INTERNAL SERVER ERROR`.
 
 We already have a failing test case to cover this, in the class: `PatentControllerIntegrationTest`.
 
@@ -43,7 +43,7 @@ Our users need to add their own patents to the system. We have the `R` of CRUD b
 ### 3. Handle Declarations
 One interesting aspect of industrial or technology standards is how they are composed. Companies or organisations typically work with a standard-setting organisation (like ISO or ETSI) to "declare" their patent to be a necessary part of a standard. So there is a relational connection between patents and standards, which we can model as a "declaration".
 
-* Create a SQL model for a declaration, and include the appropriate foreign key relationships. (It's important not to change the existing SQL model, but to extend from it).
+* Create a SQL model for a declaration, and include the appropriate foreign key relationships.
 
 * Create new endpoint(s) which let a user declare their patent(s) to be part of a standard. As in the previous task, ensure that appropriate responses and status codes are returned.
 

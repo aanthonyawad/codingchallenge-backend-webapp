@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatentService {
 
-    @Autowired
     private PatentRepository patentRepository;
+
+    @Autowired
+    public PatentService(PatentRepository patentRepository){
+        this.patentRepository = patentRepository;
+    }
 
     public Patent getSinglePatent(String publicationNumber){
         return patentRepository.findById(publicationNumber)
