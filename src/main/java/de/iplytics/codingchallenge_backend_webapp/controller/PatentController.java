@@ -1,5 +1,7 @@
-package de.iplytics.codingchallenge_backend_webapp.patents;
+package de.iplytics.codingchallenge_backend_webapp.controller;
 
+import de.iplytics.codingchallenge_backend_webapp.model.Patent;
+import de.iplytics.codingchallenge_backend_webapp.service.PatentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class PatentController {
 
     @Autowired
-    PatentService patentService;
+    PatentServiceImpl patentService;
 
     @GetMapping("/{publicationNumber}")
     @ResponseBody

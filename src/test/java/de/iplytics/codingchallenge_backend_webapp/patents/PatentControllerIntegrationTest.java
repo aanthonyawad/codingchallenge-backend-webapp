@@ -1,11 +1,16 @@
 package de.iplytics.codingchallenge_backend_webapp.patents;
 
+import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
+import de.iplytics.codingchallenge_backend_webapp.model.Patent;
+import de.iplytics.codingchallenge_backend_webapp.service.PatentServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,9 +31,11 @@ class PatentControllerIntegrationTest {
     private MockMvc mvc;
 
     @MockBean
-    private PatentService patentService;
+    private PatentServiceImpl patentService;
 
     @Test
+    @Rollback
+    @DisplayName("Test should pass, add a new patent find it then rollback changes added")
     public void requestPatent_presentInRepo_returnsPatentWithCorrectTitle() throws Exception {
         Patent mockPatent = Patent.builder()
                 .publicationDate(LocalDate.of(2019,1,1))
@@ -46,9 +53,10 @@ class PatentControllerIntegrationTest {
 
     @Test
     public void requestPatent_notPresentInRepo_returns404notFound() throws Exception {
-        given(patentService.getSinglePatent(any())).willThrow(new IllegalArgumentException());
+        given(patentService.getSinglePatent("DE1234A1"))
+                .willThrow(new IllegalArgumentException());
 
-        mvc.perform(get("/patents/US12345")
+        mvc.perform(get("/patents/DE1234A1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

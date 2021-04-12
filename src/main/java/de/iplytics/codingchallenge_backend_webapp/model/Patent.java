@@ -1,4 +1,4 @@
-package de.iplytics.codingchallenge_backend_webapp.patents;
+package de.iplytics.codingchallenge_backend_webapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

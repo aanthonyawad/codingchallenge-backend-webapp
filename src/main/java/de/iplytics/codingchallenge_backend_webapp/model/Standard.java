@@ -1,4 +1,4 @@
-package de.iplytics.codingchallenge_backend_webapp.standards;
+package de.iplytics.codingchallenge_backend_webapp.model;
 
 import lombok.Data;
 
