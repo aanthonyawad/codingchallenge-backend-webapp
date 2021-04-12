@@ -1,20 +1,39 @@
 package de.iplytics.codingchallenge_backend_webapp.controller;
 
+import de.iplytics.codingchallenge_backend_webapp.dto.response.ErrorResponse;
+import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundExxception;
+import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.service.PatentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @RequestMapping("/patents")
 public class PatentController {
 
     @Autowired
-    PatentServiceImpl patentService;
+    PatentService patentService;
 
     @GetMapping("/{publicationNumber}")
     @ResponseBody
     public Patent getPatent(@PathVariable("publicationNumber") String id){
         return patentService.getSinglePatent(id);
     }
+
+
+    /**
+     * catches error messages thrown from the API calls and return error clear error messages
+     */
+    @RestControllerAdvice
+    public class PatentControllerAdvice{
+        @ExceptionHandler(ItemNotFoundExxception.class)
+        @ResponseStatus(value= HttpStatus.NOT_FOUND)
+        public ErrorResponse incompleteRequestException(ItemNotFoundExxception ex, WebRequest request) {
+            return new ErrorResponse(404, ex.toString());
+        }
+    }
+
 }

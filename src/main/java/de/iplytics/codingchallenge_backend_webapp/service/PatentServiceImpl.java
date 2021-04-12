@@ -1,5 +1,6 @@
 package de.iplytics.codingchallenge_backend_webapp.service;
 
+import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundExxception;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.repository.PatentRepository;
@@ -20,7 +21,7 @@ public class PatentServiceImpl implements PatentService {
     public Patent getSinglePatent(String publicationNumber){
         return patentRepository.findById(publicationNumber)
                 .orElseThrow(
-                        () -> new IllegalArgumentException("Cannot find patent ID " + publicationNumber)
+                        () -> new ItemNotFoundExxception("Cannot find patent ID " + publicationNumber)
                 );
     }
 }

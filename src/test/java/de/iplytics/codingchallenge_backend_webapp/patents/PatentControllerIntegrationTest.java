@@ -1,6 +1,7 @@
 package de.iplytics.codingchallenge_backend_webapp.patents;
 
 import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
+import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundExxception;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.service.PatentServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -52,9 +53,10 @@ class PatentControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("Test should pass, search for a patent which is not in the database and throw an error")
     public void requestPatent_notPresentInRepo_returns404notFound() throws Exception {
         given(patentService.getSinglePatent("DE1234A1"))
-                .willThrow(new IllegalArgumentException());
+                .willThrow(new ItemNotFoundExxception("Patent Not Found"));
 
         mvc.perform(get("/patents/DE1234A1")
                 .contentType(MediaType.APPLICATION_JSON))
