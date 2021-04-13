@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/patents")
 public class PatentController {
@@ -17,10 +19,17 @@ public class PatentController {
     @Autowired
     PatentService patentService;
 
-    @GetMapping("/{publicationNumber}")
+    @GetMapping(path = "/{publicationNumber}", produces = "application/json")
     @ResponseBody
     public Patent getPatent(@PathVariable("publicationNumber") String id){
         return patentService.getSinglePatent(id);
+    }
+
+
+    @GetMapping(produces = "application/json")
+    @ResponseBody
+    public List<Patent> findAll(){
+        return patentService.findAll();
     }
 
 

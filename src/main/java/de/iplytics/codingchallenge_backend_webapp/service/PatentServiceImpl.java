@@ -7,6 +7,9 @@ import de.iplytics.codingchallenge_backend_webapp.repository.PatentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PatentServiceImpl implements PatentService {
 
@@ -23,5 +26,28 @@ public class PatentServiceImpl implements PatentService {
                 .orElseThrow(
                         () -> new ItemNotFoundExxception("Cannot find patent ID " + publicationNumber)
                 );
+    }
+
+    @Override
+    public List<Patent> findAll() {
+        return patentRepository.findAll()
+                .stream()
+//                .map()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Patent add(Patent patent) {
+        return null;
+    }
+
+    @Override
+    public Patent update(Patent patent) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Patent patent) {
+        return false;
     }
 }
