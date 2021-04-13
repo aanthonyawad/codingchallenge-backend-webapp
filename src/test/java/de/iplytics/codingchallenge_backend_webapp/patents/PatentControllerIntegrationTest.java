@@ -149,7 +149,7 @@ class PatentControllerIntegrationTest {
 
     @Test
     @DisplayName("Test should pass, update a single patent, Rollbacks changes")
-    @Order(5)
+    @Order(6)
     @Rollback
     public void updatePatent_presentInRepo() throws Exception{
         Patent mockPatent = Patent.builder()
@@ -178,10 +178,122 @@ class PatentControllerIntegrationTest {
 
     }
     @Test
-    @DisplayName("Test should fail, check for all input mistakes in Patent object")
-    @Order(5)
-    public void addOrUpdatePatent_checkInputMistakes() throws Exception{
+    @DisplayName("Test should fail, check for invalid title in Patent object")
+    @Order(7)
+    public void addOrUpdatePatent_checkInputMistakes_InvalidTitle() throws Exception{
+        Patent mockPatent = Patent.builder()
+                .publicationDate(LocalDate.of(2019,1,1))
+                .publicationNumber("DE1234A1")
+                .title(null)
+                .build();
 
+        PatentRequest patentRequest = new PatentRequest("DE1234A1"
+                ,"01/01/2019"
+                ,null);
+        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        when(patentService.save(patentRequest)).thenReturn(patentResponse);
+        given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
+
+
+        Gson gson = new Gson();
+        String patentJson = gson.toJson(patentRequest);
+
+        mvc.perform(post("/patents")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(patentJson)
+                .characterEncoding("utf-8"))
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    @DisplayName("Test should fail, check for invalid publication number in Patent object")
+    @Order(8)
+    public void addOrUpdatePatent_checkInputMistakes_InvalidPublicationNumber() throws Exception{
+        Patent mockPatent = Patent.builder()
+                .publicationDate(LocalDate.of(2019,1,1))
+                .publicationNumber(null)
+                .title("Method of making cheese")
+                .build();
+
+        PatentRequest patentRequest = new PatentRequest(null
+                ,"01/01/2019"
+                ,"Method of making cheese");
+        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        when(patentService.save(patentRequest)).thenReturn(patentResponse);
+        given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
+
+
+        Gson gson = new Gson();
+        String patentJson = gson.toJson(patentRequest);
+
+        mvc.perform(post("/patents")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(patentJson)
+                .characterEncoding("utf-8"))
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    @DisplayName("Test should fail, check for invalid publication date null case  in Patent object")
+    @Order(9)
+    public void addOrUpdatePatent_checkInputMistakes_InvalidPublicationDate_null() throws Exception{
+        Patent mockPatent = Patent.builder()
+                .publicationDate(LocalDate.of(2019,1,1))
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
+
+        PatentRequest patentRequest = new PatentRequest("DE1234A1"
+                ,null
+                ,"Method of making cheese");
+        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        when(patentService.save(patentRequest)).thenReturn(patentResponse);
+        given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
+
+
+        Gson gson = new Gson();
+        String patentJson = gson.toJson(patentRequest);
+
+        mvc.perform(post("/patents")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(patentJson)
+                .characterEncoding("utf-8"))
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    @DisplayName("Test should fail, check for invalid publication date format exception case in Patent object")
+    @Order(10)
+    public void addOrUpdatePatent_checkInputMistakes_nvalidPublicationDate_Wrong_format() throws Exception{
+        Patent mockPatent = Patent.builder()
+                .publicationDate(LocalDate.of(2019,1,1))
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
+
+        PatentRequest patentRequest = new PatentRequest("DE1234A1"
+                ,"1/01/219"
+                ,"Method of making cheese");
+        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        when(patentService.save(patentRequest)).thenReturn(patentResponse);
+        given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
+
+
+        Gson gson = new Gson();
+        String patentJson = gson.toJson(patentRequest);
+
+        mvc.perform(post("/patents")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(patentJson)
+                .characterEncoding("utf-8"))
+                .andExpect(status().is4xxClientError());
     }
 
 }
