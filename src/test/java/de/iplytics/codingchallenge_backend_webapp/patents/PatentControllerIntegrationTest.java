@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
+import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
 import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
@@ -30,9 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -296,4 +295,29 @@ class PatentControllerIntegrationTest {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    @Test
+    @DisplayName("Test should pass, deletes Patent")
+    @Order(11)
+    public void deletePatent_Success() throws Exception{
+        ResponseMessage responseMessage = new ResponseMessage(200, "Patent Deleted with ID DE1234A1");
+
+        given(patentService.delete("DE1234A1")).willReturn(responseMessage);
+
+        mvc.perform(delete("/patents/DE1234A1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Test should fail, tries to delete Patent but does not find it")
+    @Order(12)
+    public void deletePatent_Fail() throws Exception{
+        given(patentService.delete("12343"))
+                .willThrow(new ItemNotFoundException("Patent Not Found"));
+
+        mvc.perform(delete("/patents/12343")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
 }

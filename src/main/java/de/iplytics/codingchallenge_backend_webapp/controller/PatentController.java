@@ -1,12 +1,11 @@
 package de.iplytics.codingchallenge_backend_webapp.controller;
 
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
-import de.iplytics.codingchallenge_backend_webapp.dto.response.ErrorResponse;
+import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
-import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +25,11 @@ public class PatentController {
     @ResponseBody
     public PatentResponse getPatent(@PathVariable("publicationNumber") String id){
         return patentService.getSinglePatent(id);
+    }
+    @DeleteMapping(path = "/{publicationNumber}", produces = "application/json")
+    @ResponseBody
+    public ResponseMessage delete(@PathVariable("publicationNumber") String id){
+        return patentService.delete(id);
     }
 
 
@@ -56,14 +60,14 @@ public class PatentController {
     public class PatentControllerAdvice{
         @ExceptionHandler(ItemNotFoundException.class)
         @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ErrorResponse itemNotFoundException(ItemNotFoundException ex, WebRequest request) {
-            return new ErrorResponse(400, ex.toString());
+        public ResponseMessage itemNotFoundException(ItemNotFoundException ex, WebRequest request) {
+            return new ResponseMessage(400, ex.toString());
         }
 
         @ExceptionHandler(InvalidArgumentException.class)
         @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ErrorResponse invalidArgumentException(InvalidArgumentException ex, WebRequest request) {
-            return new ErrorResponse(400, ex.toString());
+        public ResponseMessage invalidArgumentException(InvalidArgumentException ex, WebRequest request) {
+            return new ResponseMessage(400, ex.toString());
         }
     }
 

@@ -2,6 +2,7 @@ package de.iplytics.codingchallenge_backend_webapp.service;
 
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
+import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
@@ -58,7 +59,9 @@ public class PatentServiceImpl implements PatentService {
     }
 
     @Override
-    public boolean delete(PatentRequest patentRequest) {
-        return false;
+    public ResponseMessage delete(String publicationNumber) {
+        this.getSinglePatent(publicationNumber);
+        this.patentRepository.deleteById(publicationNumber);
+        return new ResponseMessage(200,"Patent Deleted with ID"+ publicationNumber);
     }
 }
