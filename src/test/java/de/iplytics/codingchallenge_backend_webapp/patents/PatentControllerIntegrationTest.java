@@ -76,6 +76,7 @@ class PatentControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
     @Rollback
     @DisplayName("Test should pass, add a multiple patents List and rollback changes added")
@@ -130,7 +131,6 @@ class PatentControllerIntegrationTest {
 
         Gson gson = new Gson();
         String patentJson = gson.toJson(patentRequest);
-        System.out.println(patentJson);
 
         mvc.perform(post("/patents")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -150,6 +150,7 @@ class PatentControllerIntegrationTest {
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                 ,"2029-12-15"
                 ,"Method of making cheese");
+
         PatentResponse patentResponse= PatentResponse.builder()
                 .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
@@ -170,6 +171,7 @@ class PatentControllerIntegrationTest {
                 .andExpect(status().isOk());
 
     }
+
     @Test
     @DisplayName("Test should fail, check for invalid title in Patent object")
     @Order(7)
