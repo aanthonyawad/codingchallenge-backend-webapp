@@ -1,12 +1,15 @@
 package de.iplytics.codingchallenge_backend_webapp.service;
 
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
+import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
+import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.repository.PatentRepository;
+import de.iplytics.codingchallenge_backend_webapp.util.StringUtility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +50,7 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public PatentResponse save(PatentRequest patentRequest) {
+        this.checkPatentRequest(patentRequest);
         Patent patent = modelMapper.convertPatentToEntity(patentRequest);
         patent = patentRepository.save(patent);
         return modelMapper.convertPatentToDto(patent);
@@ -64,6 +68,15 @@ public class PatentServiceImpl implements PatentService {
         this.getSinglePatent(publicationNumber);
         this.patentRepository.deleteById(publicationNumber);
         return new ResponseMessage(200,"Patent Deleted with ID"+ publicationNumber);
+    }
+
+    private void checkPatentRequest(PatentRequest patentRequest){
+        if(StringUtility.isEmptyOrNull(patentRequest.getPublicationNumber()))
+            throw new InvalidArgumentException("Patent Publication Number not Found");
+        if(StringUtility.isEmptyOrNull(patentRequest.getTitle()))
+            throw new InvalidArgumentException("Patent Title not Found");
+        if(StringUtility.isEmptyOrNull(patentRequest.getPublicationDate()))
+            throw new InvalidArgumentException("Patent Publication Number not Found");
     }
 
 }

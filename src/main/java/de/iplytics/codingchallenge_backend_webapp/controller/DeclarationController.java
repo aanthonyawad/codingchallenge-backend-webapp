@@ -41,39 +41,14 @@ public class DeclarationController {
 
     @PostMapping(produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DeclarationResponse save(@RequestBody DeclarationRequest declarationRequest){
+    public DeclarationResponse save(@RequestBody(required = true) DeclarationRequest declarationRequest){
         return declarationService.save(declarationRequest);
     }
 
     @PutMapping(produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DeclarationResponse update(@RequestBody DeclarationRequest declarationRequest){
+    public DeclarationResponse update(@RequestBody(required = true) DeclarationRequest declarationRequest){
         return declarationService.update(declarationRequest);
     }
 
-
-
-    /**
-     * catches error messages thrown from the API calls and return error clear error messages
-     */
-    @RestControllerAdvice
-    public class DeclarationControllerAdvice{
-        @ExceptionHandler(ItemNotFoundException.class)
-        @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ResponseMessage itemNotFoundException(ItemNotFoundException ex, WebRequest request) {
-            return ResponseMessage.builder()
-                    .code(400)
-                    .message(ex.getMessage())
-                    .build();
-        }
-
-        @ExceptionHandler(InvalidArgumentException.class)
-        @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ResponseMessage invalidArgumentException(InvalidArgumentException ex, WebRequest request) {
-            return  ResponseMessage.builder()
-                    .code(400)
-                    .message(ex.getMessage())
-                    .build();
-        }
-    }
 }

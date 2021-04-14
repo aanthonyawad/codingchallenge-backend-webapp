@@ -56,21 +56,5 @@ public class StandardController {
     }
 
 
-    /**
-     * catches error messages thrown from the API calls and return error clear error messages
-     */
-    @RestControllerAdvice
-    public class StandardControllerAdvice{
-        @ExceptionHandler(ItemNotFoundException.class)
-        @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ResponseMessage itemNotFoundException(ItemNotFoundException ex, WebRequest request) {
-            return new ResponseMessage(400, ex.toString());
-        }
 
-        @ExceptionHandler(InvalidArgumentException.class)
-        @ResponseStatus(value= HttpStatus.BAD_REQUEST)
-        public ResponseMessage invalidArgumentException(InvalidArgumentException ex, WebRequest request) {
-            return new ResponseMessage(400, ex.toString());
-        }
-    }
 }

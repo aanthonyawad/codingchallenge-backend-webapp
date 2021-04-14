@@ -3,10 +3,12 @@ package de.iplytics.codingchallenge_backend_webapp.service;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.StandardResponse;
+import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.StandardService;
 import de.iplytics.codingchallenge_backend_webapp.model.Standard;
 import de.iplytics.codingchallenge_backend_webapp.repository.StandardRepository;
+import de.iplytics.codingchallenge_backend_webapp.util.StringUtility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,7 @@ public class StandardServiceImpl implements StandardService {
 
     @Override
     public StandardResponse save(StandardRequest standardRequest) {
+        this.checkStandardRequest(standardRequest);
         Standard standard = modelMapper.convertStandardToEntity(standardRequest);
         standard = standardRepository.save(standard);
         return modelMapper.convertStandardToDto(standard);
@@ -65,4 +68,12 @@ public class StandardServiceImpl implements StandardService {
         return new ResponseMessage(200,"Standard Deleted with ID"+ standardId);
     }
 
+    private void checkStandardRequest(StandardRequest standardRequest){
+        if(StringUtility.isEmptyOrNull(standardRequest.getStandardId()))
+            throw new InvalidArgumentException("Standard Id not Found");
+        if(StringUtility.isEmptyOrNull(standardRequest.getName()))
+            throw new InvalidArgumentException("Standard Name not Found");
+        if(StringUtility.isEmptyOrNull(standardRequest.getDescription()))
+            throw new InvalidArgumentException("Standard Description not Found");
+    }
 }
