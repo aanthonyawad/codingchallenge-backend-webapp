@@ -7,29 +7,25 @@ import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundExceptio
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.repository.PatentRepository;
-import de.iplytics.codingchallenge_backend_webapp.util.DateTimeFormatUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.util.Optional.empty;
 
 @Service
 public class PatentServiceImpl implements PatentService {
 
     private PatentRepository patentRepository;
 
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    public PatentServiceImpl(PatentRepository patentRepository){
+    public PatentServiceImpl(PatentRepository patentRepository,ModelMapper modelMapper){
         this.patentRepository = patentRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -71,13 +67,13 @@ public class PatentServiceImpl implements PatentService {
     }
 
     public Patent convertToEntity(PatentRequest patentRequest) {
-        Patent post = modelMapper.map(patentRequest, Patent.class);
+        Patent post = this.modelMapper.map(patentRequest, Patent.class);
         post.setPublicationDateDto(patentRequest.getPublicationDate());
         return post;
     }
 
     public PatentResponse convertToDto(Patent patent) {
-        PatentResponse patentResponse = modelMapper.map(patent, PatentResponse.class);
+        PatentResponse patentResponse = this.modelMapper.map(patent, PatentResponse.class);
         patentResponse.setPublicationDateDto(patent.getPublicationDate());
         return patentResponse;
     }

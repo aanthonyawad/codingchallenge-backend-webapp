@@ -2,6 +2,7 @@ package de.iplytics.codingchallenge_backend_webapp.standards;
 
 import com.google.gson.Gson;
 import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
+import de.iplytics.codingchallenge_backend_webapp.controller.StandardController;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
@@ -36,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(PatentController.class)
+@WebMvcTest(StandardController.class)
 class StandardControllerIntegrationTest {
 
     @Autowired
@@ -113,7 +114,7 @@ class StandardControllerIntegrationTest {
         Stream.empty().collect(Collectors.toList());
         given(standardService.findAll()).willReturn(new ArrayList<>());
 
-        mvc.perform(get("/patents")
+        mvc.perform(get("/standards")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
