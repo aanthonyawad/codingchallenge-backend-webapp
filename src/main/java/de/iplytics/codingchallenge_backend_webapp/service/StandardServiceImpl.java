@@ -20,10 +20,10 @@ public class StandardServiceImpl implements StandardService {
 
     private StandardRepository standardRepository;
 
-    private ModelMapper modelMapper;
+    private ModelMapperService modelMapper;
 
     @Autowired
-    public StandardServiceImpl(StandardRepository standardRepository,ModelMapper modelMapper){
+    public StandardServiceImpl(StandardRepository standardRepository,ModelMapperService modelMapper){
         this.standardRepository = standardRepository;
         this.modelMapper = modelMapper;
     }
@@ -31,7 +31,7 @@ public class StandardServiceImpl implements StandardService {
     @Override
     public StandardResponse getSingleStandard(String standardId) {
         return standardRepository.findById(standardId)
-                .map(this::convertToDto)
+                .map(modelMapper::convertStandardToDto)
                 .orElseThrow(
                         () -> new ItemNotFoundException("Cannot find standard ID " + standardId)
                 );
@@ -41,15 +41,15 @@ public class StandardServiceImpl implements StandardService {
     public List<StandardResponse> findAll() {
         return standardRepository.findAll()
                 .stream()
-                .map(this::convertToDto)
+                .map(modelMapper::convertStandardToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public StandardResponse save(StandardRequest standardRequest) {
-        Standard standard = this.convertToEntity(standardRequest);
+        Standard standard = modelMapper.convertStandardToEntity(standardRequest);
         standard = standardRepository.save(standard);
-        return this.convertToDto(standard);
+        return modelMapper.convertStandardToDto(standard);
     }
 
     @Override
@@ -65,14 +65,4 @@ public class StandardServiceImpl implements StandardService {
         return new ResponseMessage(200,"Standard Deleted with ID"+ standardId);
     }
 
-
-    public Standard convertToEntity(StandardRequest standardRequest) {
-        Standard standard = this.modelMapper.map(standardRequest, Standard.class);
-        return standard;
-    }
-
-    public StandardResponse convertToDto(Standard standard) {
-        StandardResponse standardResponse = this.modelMapper.map(standard, StandardResponse.class);
-        return standardResponse;
-    }
 }

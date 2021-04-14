@@ -50,7 +50,7 @@ class StandardControllerIntegrationTest {
     @Rollback
     @DisplayName("Test should pass, add a new standard find it then rollback changes added")
     @Order(1)
-    public void requestStandard_presentInRepo_returnsPatentWithCorrectTitle() throws Exception {
+    public void requestStandard_presentInRepo_returnsStandardWithCorrectValues() throws Exception {
 
         StandardResponse standardResponse= StandardResponse.builder()
                 .description("ISO standard description")

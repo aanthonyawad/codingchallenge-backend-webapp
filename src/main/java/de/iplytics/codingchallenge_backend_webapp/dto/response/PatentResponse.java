@@ -17,7 +17,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatentResponse extends BaseResponse implements Serializable {
+public class PatentResponse implements Serializable {
     @JsonProperty(value = "publicationNumber")
     private String publicationNumber;
     @JsonProperty(value = "publicationDate")

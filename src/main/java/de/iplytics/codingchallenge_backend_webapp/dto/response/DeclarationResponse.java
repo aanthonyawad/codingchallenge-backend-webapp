@@ -12,11 +12,11 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StandardResponse implements Serializable {
-    @JsonProperty(value = "standardId")
-    private String standardId;
-    @JsonProperty(value = "name")
-    private String name;
-    @JsonProperty(value = "description")
-    private String description;
+public class DeclarationResponse implements Serializable {
+
+    @JsonProperty(value = "patentResponse")
+    private PatentResponse patentResponse;
+
+    @JsonProperty(value = "standardResponse")
+    private StandardResponse standardResponse;
 }

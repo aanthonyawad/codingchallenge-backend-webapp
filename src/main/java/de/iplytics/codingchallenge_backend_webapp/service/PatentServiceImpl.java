@@ -20,10 +20,10 @@ public class PatentServiceImpl implements PatentService {
 
     private PatentRepository patentRepository;
 
-    private ModelMapper modelMapper;
+    private ModelMapperService modelMapper;
 
     @Autowired
-    public PatentServiceImpl(PatentRepository patentRepository,ModelMapper modelMapper){
+    public PatentServiceImpl(PatentRepository patentRepository,ModelMapperService modelMapper){
         this.patentRepository = patentRepository;
         this.modelMapper = modelMapper;
     }
@@ -31,7 +31,7 @@ public class PatentServiceImpl implements PatentService {
     @Override
     public PatentResponse getSinglePatent(String publicationNumber){
         return patentRepository.findById(publicationNumber)
-                .map(this::convertToDto)
+                .map(modelMapper::convertPatentToDto)
                 .orElseThrow(
                         () -> new ItemNotFoundException("Cannot find patent ID " + publicationNumber)
                 );
@@ -41,15 +41,15 @@ public class PatentServiceImpl implements PatentService {
     public List<PatentResponse> findAll() {
         return patentRepository.findAll()
                 .stream()
-                .map(this::convertToDto)
+                .map(modelMapper::convertPatentToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PatentResponse save(PatentRequest patentRequest) {
-        Patent patent = this.convertToEntity(patentRequest);
+        Patent patent = modelMapper.convertPatentToEntity(patentRequest);
         patent = patentRepository.save(patent);
-        return this.convertToDto(patent);
+        return modelMapper.convertPatentToDto(patent);
     }
 
 
@@ -66,15 +66,4 @@ public class PatentServiceImpl implements PatentService {
         return new ResponseMessage(200,"Patent Deleted with ID"+ publicationNumber);
     }
 
-    public Patent convertToEntity(PatentRequest patentRequest) {
-        Patent post = this.modelMapper.map(patentRequest, Patent.class);
-        post.setPublicationDateDto(patentRequest.getPublicationDate());
-        return post;
-    }
-
-    public PatentResponse convertToDto(Patent patent) {
-        PatentResponse patentResponse = this.modelMapper.map(patent, PatentResponse.class);
-        patentResponse.setPublicationDateDto(patent.getPublicationDate());
-        return patentResponse;
-    }
 }

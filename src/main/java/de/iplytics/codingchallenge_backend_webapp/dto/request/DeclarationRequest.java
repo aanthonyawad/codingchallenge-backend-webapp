@@ -6,17 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StandardRequest implements Serializable {
+public class DeclarationRequest {
+
+    @JsonProperty(value = "declarationId")
+    private String declarationId;
+
+    @JsonProperty(value = "publicationNumber")
+    private String publicationNumber;
+
     @JsonProperty(value = "standardId")
     private String standardId;
-    @JsonProperty(value = "name")
-    private String name;
-    @JsonProperty(value = "description")
-    private String description;
 }
