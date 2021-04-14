@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Data
@@ -23,5 +25,8 @@ public class PatentResponse extends BaseResponse implements Serializable {
     @JsonProperty(value = "title")
     private String title;
 
+    public void setPublicationDateDto(LocalDate localDate) {
+        this.publicationDate = DateTimeFormatUtils.DateToString(localDate);
+    }
 
 }

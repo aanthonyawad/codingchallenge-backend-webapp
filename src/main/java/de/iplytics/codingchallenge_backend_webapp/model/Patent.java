@@ -29,4 +29,7 @@ public class Patent implements Serializable {
     @OneToOne(mappedBy = "patent")
     private Declaration declaration;
 
+    public void setPublicationDateDto(String date) {
+        this.publicationDate = DateTimeFormatUtils.StringToDate(date);
+    }
 }

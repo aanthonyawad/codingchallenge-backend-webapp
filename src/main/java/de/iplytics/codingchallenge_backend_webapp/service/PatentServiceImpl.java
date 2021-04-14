@@ -72,11 +72,13 @@ public class PatentServiceImpl implements PatentService {
 
     public Patent convertToEntity(PatentRequest patentRequest) {
         Patent post = modelMapper.map(patentRequest, Patent.class);
+        post.setPublicationDateDto(patentRequest.getPublicationDate());
         return post;
     }
 
     public PatentResponse convertToDto(Patent patent) {
         PatentResponse patentResponse = modelMapper.map(patent, PatentResponse.class);
+        patentResponse.setPublicationDateDto(patent.getPublicationDate());
         return patentResponse;
     }
 }

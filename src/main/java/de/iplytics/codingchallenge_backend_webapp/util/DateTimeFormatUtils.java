@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeFormatUtils {
     public  static String DateToString(LocalDate localDate){
-        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return localDate.format(formatter);
     }
 
@@ -17,10 +17,10 @@ public class DateTimeFormatUtils {
         }
         try{
 
-            DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return LocalDate.parse(date,formatter);
         }catch (Exception e){
-            throw new InvalidArgumentException("publicatondate format dd/MM/yyyy");
+            throw new InvalidArgumentException("publicatondate format yyyy-MM-dd");
         }
     }
 }

@@ -52,7 +52,7 @@ class PatentControllerIntegrationTest {
     public void requestPatent_presentInRepo_returnsPatentWithCorrectTitle() throws Exception {
 
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2919")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
@@ -82,12 +82,12 @@ class PatentControllerIntegrationTest {
     @Order(3)
     public void requestPatents_presentInRepo_returnsPatentList() throws Exception{
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2919")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
         PatentResponse patentResponse1= PatentResponse.builder()
-                .publicationDate("01/01/2919")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE2344A1")
                 .title("Method of making wine")
                 .build();
@@ -118,10 +118,10 @@ class PatentControllerIntegrationTest {
 
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
-                                                        ,"01/01/2019"
+                                                        ,"2029-12-15"
                                                         ,"Method of making cheese");
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2019")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
@@ -148,10 +148,10 @@ class PatentControllerIntegrationTest {
     public void updatePatent_presentInRepo() throws Exception{
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
-                ,"01/01/2019"
+                ,"2029-12-15"
                 ,"Method of making cheese");
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2019")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
@@ -176,10 +176,10 @@ class PatentControllerIntegrationTest {
     public void addOrUpdatePatent_checkInputMistakes_InvalidTitle() throws Exception{
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
-                ,"01/01/2019"
+                ,"2029-12-15"
                 ,null);
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2019")
+                .publicationDate("2029-12-15")
                 .publicationNumber("DE1234A1")
                 .title(null)
                 .build();
@@ -205,11 +205,11 @@ class PatentControllerIntegrationTest {
     public void addOrUpdatePatent_checkInputMistakes_InvalidPublicationNumber() throws Exception{
 
         PatentRequest patentRequest = new PatentRequest(null
-                ,"01/01/2019"
+                ,"2029-12-15"
                 ,"Method of making cheese");
 
         PatentResponse patentResponse= PatentResponse.builder()
-                .publicationDate("01/01/2019")
+                .publicationDate("2029-12-15")
                 .publicationNumber(null)
                 .title("Method of making cheese")
                 .build();
