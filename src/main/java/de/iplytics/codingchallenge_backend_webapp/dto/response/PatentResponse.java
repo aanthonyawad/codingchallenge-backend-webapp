@@ -23,10 +23,5 @@ public class PatentResponse extends BaseResponse implements Serializable {
     @JsonProperty(value = "title")
     private String title;
 
-    public PatentResponse(Patent patent){
-        this.publicationNumber = patent.getPublicationNumber();
-        this.publicationDate  = DateTimeFormatUtils.DateToString(patent.getPublicationDate());
-        this.title = patent.getTitle();
-    }
 
 }

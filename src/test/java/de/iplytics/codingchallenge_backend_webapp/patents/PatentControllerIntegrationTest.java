@@ -50,13 +50,12 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should pass, add a new patent find it then rollback changes added")
     @Order(1)
     public void requestPatent_presentInRepo_returnsPatentWithCorrectTitle() throws Exception {
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
+
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2919")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
-
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
 
         given(patentService.getSinglePatent(any())).willReturn(patentResponse);
 
@@ -82,20 +81,16 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should pass, add a multiple patents List and rollback changes added")
     @Order(3)
     public void requestPatents_presentInRepo_returnsPatentList() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2919")
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
-        Patent mockPatent1 = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
+        PatentResponse patentResponse1= PatentResponse.builder()
+                .publicationDate("01/01/2919")
                 .publicationNumber("DE2344A1")
                 .title("Method of making wine")
                 .build();
-
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
-
-        PatentResponse patentResponse1= new PatentResponse(mockPatent1);
         given(patentService.findAll())
                 .willReturn(Stream.of(patentResponse,patentResponse1).collect(Collectors.toList()));
 
@@ -120,16 +115,16 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should pass, add a single patent")
     @Order(5)
     public void addPatent_notPresentInRepo() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber("DE1234A1")
-                .title("Method of making cheese")
-                .build();
+
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                                                         ,"01/01/2019"
                                                         ,"Method of making cheese");
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2019")
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
 
@@ -151,17 +146,16 @@ class PatentControllerIntegrationTest {
     @Order(6)
     @Rollback
     public void updatePatent_presentInRepo() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber("DE1234A1")
-                .title("Method of making cheese")
-                .build();
-
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                 ,"01/01/2019"
                 ,"Method of making cheese");
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2019")
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
+
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
 
@@ -180,16 +174,15 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should fail, check for invalid title in Patent object")
     @Order(7)
     public void addOrUpdatePatent_checkInputMistakes_InvalidTitle() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber("DE1234A1")
-                .title(null)
-                .build();
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                 ,"01/01/2019"
                 ,null);
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2019")
+                .publicationNumber("DE1234A1")
+                .title(null)
+                .build();
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
         given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
@@ -210,16 +203,16 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should fail, check for invalid publication number in Patent object")
     @Order(8)
     public void addOrUpdatePatent_checkInputMistakes_InvalidPublicationNumber() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber(null)
-                .title("Method of making cheese")
-                .build();
 
         PatentRequest patentRequest = new PatentRequest(null
                 ,"01/01/2019"
                 ,"Method of making cheese");
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("01/01/2019")
+                .publicationNumber(null)
+                .title("Method of making cheese")
+                .build();
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
         given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
@@ -240,16 +233,15 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should fail, check for invalid publication date null case  in Patent object")
     @Order(9)
     public void addOrUpdatePatent_checkInputMistakes_InvalidPublicationDate_null() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber("DE1234A1")
-                .title("Method of making cheese")
-                .build();
-
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                 ,null
                 ,"Method of making cheese");
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate(null)
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
         given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
@@ -270,16 +262,15 @@ class PatentControllerIntegrationTest {
     @DisplayName("Test should fail, check for invalid publication date format exception case in Patent object")
     @Order(10)
     public void addOrUpdatePatent_checkInputMistakes_nvalidPublicationDate_Wrong_format() throws Exception{
-        Patent mockPatent = Patent.builder()
-                .publicationDate(LocalDate.of(2019,1,1))
-                .publicationNumber("DE1234A1")
-                .title("Method of making cheese")
-                .build();
 
         PatentRequest patentRequest = new PatentRequest("DE1234A1"
                 ,"1/01/219"
                 ,"Method of making cheese");
-        PatentResponse patentResponse= new PatentResponse(mockPatent);
+        PatentResponse patentResponse= PatentResponse.builder()
+                .publicationDate("1/01/219")
+                .publicationNumber("DE1234A1")
+                .title("Method of making cheese")
+                .build();
 
         when(patentService.save(patentRequest)).thenReturn(patentResponse);
         given(patentService.save(patentRequest)).willThrow(new InvalidArgumentException("Invalid Argument"));
