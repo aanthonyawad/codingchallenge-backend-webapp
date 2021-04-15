@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +43,18 @@ public class StandardServiceImpl implements StandardService {
 
     @Override
     public List<StandardResponse> findAll() {
-        return standardRepository.findAll()
-                .stream()
-                .map(modelMapper::convertStandardToDto)
-                .collect(Collectors.toList());
+//        return standardRepository.findAll()
+//                .stream()
+//                .map(modelMapper::convertStandardToDto)
+//                .collect(Collectors.toList());
+        Iterable<Standard> standards = standardRepository.findAll();
+        Iterator<Standard> standardIterator = standards.iterator();
+        List<StandardResponse> result = new ArrayList<>();
+        while (standardIterator.hasNext()){
+            result.add( modelMapper.convertStandardToDto(standardIterator.next()));
+        }
+        return result;
+
     }
 
     @Override

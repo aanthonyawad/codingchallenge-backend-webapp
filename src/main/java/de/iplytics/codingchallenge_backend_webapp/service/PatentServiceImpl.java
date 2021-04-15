@@ -4,16 +4,20 @@ import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
+import de.iplytics.codingchallenge_backend_webapp.dto.response.StandardResponse;
 import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
 import de.iplytics.codingchallenge_backend_webapp.interfaces.PatentService;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
+import de.iplytics.codingchallenge_backend_webapp.model.Standard;
 import de.iplytics.codingchallenge_backend_webapp.repository.PatentRepository;
 import de.iplytics.codingchallenge_backend_webapp.util.StringUtility;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,10 +46,17 @@ public class PatentServiceImpl implements PatentService {
 
     @Override
     public List<PatentResponse> findAll() {
-        return patentRepository.findAll()
-                .stream()
-                .map(modelMapper::convertPatentToDto)
-                .collect(Collectors.toList());
+//        return patentRepository.findAll()
+//                .stream()
+//                .map(modelMapper::convertPatentToDto)
+//                .collect(Collectors.toList());
+        Iterable<Patent> patents = patentRepository.findAll();
+        Iterator<Patent> patentIterator = patents.iterator();
+        List<PatentResponse> result = new ArrayList<>();
+        while (patentIterator.hasNext()){
+            result.add( modelMapper.convertPatentToDto(patentIterator.next()));
+        }
+        return result;
     }
 
     @Override

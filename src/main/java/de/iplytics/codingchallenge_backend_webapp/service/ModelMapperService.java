@@ -6,7 +6,6 @@ import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.DeclarationResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.StandardResponse;
-import de.iplytics.codingchallenge_backend_webapp.model.Declaration;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.model.Standard;
 import org.modelmapper.ModelMapper;
@@ -44,22 +43,23 @@ public class ModelMapperService {
 
 
 
-    public Declaration convertDeclarationToEntity(DeclarationRequest declarationRequest) {
-        Declaration declaration = this.modelMapper.map(declarationRequest, Declaration.class);
-
-//        Declaration declaration = Declaration.builder()
-//                .declarationId(declarationId)
-//                .patent(patent)
-//                .standard(standard)
+//    public Declaration convertDeclarationToEntity(DeclarationRequest declarationRequest) {
+//        Declaration declaration = this.modelMapper.map(declarationRequest, Declaration.class);
+//
+////        Declaration declaration = Declaration.builder()
+////                .declarationId(declarationId)
+////                .patent(patent)
+////                .standard(standard)
+////                .build();
+//        return declaration;
+//    }
+//
+//    public DeclarationResponse convertDeclarationToDto(Declaration declaration) {
+//        DeclarationResponse declarationResponse = DeclarationResponse.builder()
+//                .standardResponse(this.convertStandardToDto(declaration.getStandard()))
+//                .patentResponse(this.convertPatentToDto(declaration.getPatent()))
 //                .build();
-        return declaration;
-    }
+//        return declarationResponse;
+//    }
 
-    public DeclarationResponse convertDeclarationToDto(Declaration declaration) {
-        DeclarationResponse declarationResponse = DeclarationResponse.builder()
-                .standardResponse(this.convertStandardToDto(declaration.getStandard()))
-                .patentResponse(this.convertPatentToDto(declaration.getPatent()))
-                .build();
-        return declarationResponse;
-    }
 }
