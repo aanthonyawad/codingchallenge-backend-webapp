@@ -2,52 +2,47 @@
 This coding challenge is for candidates for the position "Backend Developer - Web Applications"
 
 ## Overview
-Our software lets users search for Patents and Standards, amongst other things. Our web application is the gateway to our data sets, and we would like to see how well you can build an application that models a little part of our data universe.
+Our software lets users search for Patents and Standards, amongst other things.
+## Tools Used
 
-We want to know how well you can work with the following:
-* Spring Boot framework
-* Modern Java API's
-* RESTful API design
-* Unit and integration testing
-* Written and generated documentation
+- open-jdk 8
+- maven
+- Spring
+- H2 in memory database to persist the data
 
-## What we provide you
-Fork this repo or clone it to your local environment. You will have a fully working Spring Boot webapp, which you can run and access at http://localhost:8080 to use a very simple API. Make a `GET` request to http://localhost:8080/patents/US1234A1 to load a dummy patent we created for you to get started.
+## Generates
+A runnable jar will be generated that will be can be used hit on the enpdoint http://localhost:8080/
 
-The repo also contains some SQL scripts managed with Flyway, to manage our data model and contents. Data is stored in an in-memory H2 database which is recreated when the application starts up, so you don't need to configure anything external.
+## How To generate the jar
+to test the app run:
+```bash
+mvn test
+```
 
-Run it from the entry point in the class `CodingchallengeBackendWebappApplication`.
+to generate the jar run:
+```bash 
+mvn compile
+```
 
-## What we want you to do
+to run the app run:
+```bash
+mvn spring-boot:run
+```
 
-You must solve a few small challenges in order to pass our test. In addition to doing the tasks below, we want to see that you can:
-* Write clean code and structure it well
-* Cover your code with tests in a suitable manner
-* Write good commit messages and break up your work into sensibly-sized chunks
-* Add documentation where necessary. This could be handwritten or auto-generated from your code
+change default port in application.properties file set the command to the port wanted server.port=8081
 
-Here are your tasks:
+## SonarQube Linting
+please note that you need to have sonarQube installed on your machine
+more details : https://www.sonarqube.org/
+```bash
+mvn sonar:sonar -Dsonar.projectKey=de.iplytics.codingchallenge_backend_webapp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=54db2a4cf71d61a01d01a61fa108c571946a70a6
+```
 
-### 1. Fix an endpoint bug
-There is a bug in the `/patents/{publicationNumber}` GET endpoint. When we request a patent that we don't have in our database (For example, http://localhost:8080/patents/I-DO-NOT-EXIST ), the endpoint should return a `404 NOT FOUND` but that's not working. Instead we see a `500 INTERNAL SERVER ERROR`.
+## Swagger documentaion under
+http://localhost:8080/swagger-ui.html
 
-We already have a failing test case to cover this, in the class: `PatentControllerIntegrationTest`.
 
-* Make the test pass, and try do it in a way which makes the best use of the Spring Framework's features.
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-### 2. CRUD for patents 
-Our users need to add their own patents to the system. We have the `R` of CRUD but not the rest! 
-
-* Add new endpoints to the `PatentController` so we can create new patent entries, or update/delete existing ones. Make sure to use the best practices of RESTful API design, to return sensible responses, and the correct status codes as required. You should also add integration and unit tests as needed.
-
-### 3. Handle Declarations
-One interesting aspect of industrial or technology standards is how they are composed. Companies or organisations typically work with a standard-setting organisation (like ISO or ETSI) to "declare" their patent to be a necessary part of a standard. So there is a relational connection between patents and standards, which we can model as a "declaration".
-
-* Create a SQL model for a declaration, and include the appropriate foreign key relationships.
-
-* Create new endpoint(s) which let a user declare their patent(s) to be part of a standard. As in the previous task, ensure that appropriate responses and status codes are returned.
-
-## How to submit
-Once you're happy with your work and want to submit, `zip` the repo folder and submit it via email to our HR manager. Remember to include the whole assignment directory (including hidden files), so we can see your git commit history.
-
-Best of luck and thanks for taking the time to complete this challenge.
+Please make sure to update tests as appropriate.

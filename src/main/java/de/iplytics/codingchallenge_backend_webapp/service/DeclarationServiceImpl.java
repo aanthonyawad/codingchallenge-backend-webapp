@@ -59,18 +59,14 @@ public class DeclarationServiceImpl implements DeclarationService {
     @Override
     public DeclarationResponse save(DeclarationRequest declarationRequest) {
         Optional<Patent> opatent = patentRepository.findById(declarationRequest.getPublicationNumber());
-        opatent.orElseThrow(
+        Patent patent = opatent.orElseThrow(
                 () -> new ItemNotFoundException("Cannot find Patent with ID " + declarationRequest.getPublicationNumber())
         );
-        Patent patent= opatent.get();
 
         Optional<Standard> ostandard = standardRepository.findById(declarationRequest.getStandardId());
-        ostandard.orElseThrow(
+        Standard standard = ostandard.orElseThrow(
                 () -> new ItemNotFoundException("Cannot find Declaration with ID " + declarationRequest.getStandardId())
         );
-
-        Standard standard = ostandard.get();
-
         Declaration declaration = Declaration.builder()
                 .declarationId(declarationRequest.getDeclarationId())
                 .patent(patent)
