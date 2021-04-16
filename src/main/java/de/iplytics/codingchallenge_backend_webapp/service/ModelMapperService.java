@@ -6,6 +6,7 @@ import de.iplytics.codingchallenge_backend_webapp.dto.request.StandardRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.DeclarationResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.StandardResponse;
+import de.iplytics.codingchallenge_backend_webapp.model.Declaration;
 import de.iplytics.codingchallenge_backend_webapp.model.Patent;
 import de.iplytics.codingchallenge_backend_webapp.model.Standard;
 import org.modelmapper.ModelMapper;
@@ -30,36 +31,28 @@ public class ModelMapperService {
 
     public Patent convertPatentToEntity(PatentRequest patentRequest) {
         Patent post = this.modelMapper.map(patentRequest, Patent.class);
-        post.setPublicationDateDto(patentRequest.getPublicationDate());
         return post;
     }
 
     public PatentResponse convertPatentToDto(Patent patent) {
         PatentResponse patentResponse = this.modelMapper.map(patent, PatentResponse.class);
-        patentResponse.setPublicationDateDto(patent.getPublicationDate());
         return patentResponse;
     }
 
 
 
 
-//    public Declaration convertDeclarationToEntity(DeclarationRequest declarationRequest) {
-//        Declaration declaration = this.modelMapper.map(declarationRequest, Declaration.class);
-//
-////        Declaration declaration = Declaration.builder()
-////                .declarationId(declarationId)
-////                .patent(patent)
-////                .standard(standard)
-////                .build();
-//        return declaration;
-//    }
-//
-//    public DeclarationResponse convertDeclarationToDto(Declaration declaration) {
-//        DeclarationResponse declarationResponse = DeclarationResponse.builder()
-//                .standardResponse(this.convertStandardToDto(declaration.getStandard()))
-//                .patentResponse(this.convertPatentToDto(declaration.getPatent()))
-//                .build();
-//        return declarationResponse;
-//    }
+    public Declaration convertDeclarationToEntity(DeclarationRequest declarationRequest) {
+        Declaration declaration = this.modelMapper.map(declarationRequest, Declaration.class);
+
+        return declaration;
+    }
+
+    public DeclarationResponse convertDeclarationToDto(Declaration declaration,Patent patent, Standard standard) {
+        DeclarationResponse declarationResponse = this.modelMapper.map(declaration, DeclarationResponse.class);
+        declarationResponse.setPatentResponse(this.convertPatentToDto(patent));
+        declarationResponse.setStandardResponse(this.convertStandardToDto(standard));
+        return declarationResponse;
+    }
 
 }

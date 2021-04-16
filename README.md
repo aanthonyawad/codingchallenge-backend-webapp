@@ -41,15 +41,16 @@ mvn sonar:sonar -Dsonar.projectKey=de.iplytics.codingchallenge_backend_webapp -D
 ## Swagger documentaion under
 http://localhost:8080/swagger-ui.html
 
-## Solr DB config
-solr DB version 8.8.2
-run solr DB
-from the bin directory in the terminal
-run the following command : solr start
+## Solr 8.8.2 DB config
+- solr DB version 8.8.2
+- download apache solr zip from : https://www.apache.org/dyn/closer.lua/lucene/solr/8.8.2/solr-8.8.2.zip
+- run solr DB from the bin directory in the terminal run the following command : solr start
+- solr endpoint : localhost:8983:solr/
 
 ### add solr cores
 - solr create -c patent
 - solr create -c standard
+- solr create -c declaration
 
 
 ## Contributing

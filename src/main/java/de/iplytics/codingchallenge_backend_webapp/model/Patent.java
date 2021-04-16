@@ -26,11 +26,7 @@ public class Patent implements Serializable {
     @Indexed(name = "publicationNumber", type = "string")
     private String publicationNumber;
     @Indexed(name = "publicationDate", type = "string")
-    private LocalDate publicationDate;
+    private String publicationDate;
     @Indexed(name = "title", type = "string")
     private String title;
-
-    public void setPublicationDateDto(String date) {
-        this.publicationDate = DateTimeFormatUtils.StringToDate(date);
-    }
 }
