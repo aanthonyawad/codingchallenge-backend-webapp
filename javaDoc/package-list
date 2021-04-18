@@ -1,0 +1,13 @@
+de.iplytics.codingchallenge_backend_webapp
+de.iplytics.codingchallenge_backend_webapp.config
+de.iplytics.codingchallenge_backend_webapp.config.security
+de.iplytics.codingchallenge_backend_webapp.controller
+de.iplytics.codingchallenge_backend_webapp.declarations
+de.iplytics.codingchallenge_backend_webapp.dto.request
+de.iplytics.codingchallenge_backend_webapp.dto.response
+de.iplytics.codingchallenge_backend_webapp.exception
+de.iplytics.codingchallenge_backend_webapp.interfaces
+de.iplytics.codingchallenge_backend_webapp.model
+de.iplytics.codingchallenge_backend_webapp.repository
+de.iplytics.codingchallenge_backend_webapp.service
+de.iplytics.codingchallenge_backend_webapp.util
