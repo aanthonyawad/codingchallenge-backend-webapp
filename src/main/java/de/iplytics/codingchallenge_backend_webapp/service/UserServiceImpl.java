@@ -11,6 +11,7 @@ import de.iplytics.codingchallenge_backend_webapp.service.JwtService;
 import de.iplytics.codingchallenge_backend_webapp.service.MyUserDetailsService;
 import de.iplytics.codingchallenge_backend_webapp.util.StringUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,26 +21,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    @Autowired
     AuthenticationManager authenticationManager;
-
+    @Autowired
     MyUserDetailsService userDetailsService;
-
-
+    @Autowired
     UserRepository userRepository;
-
+    @Autowired
     JwtService jwtService;
 
-    @Autowired
-    UserServiceImpl(AuthenticationManager authenticationManager
-            ,MyUserDetailsService userDetailsService
-            ,UserRepository userRepository
-            ,JwtService jwtService){
-
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.jwtService = jwtService;
-    }
+//    @Autowired
+//    UserServiceImpl(AuthenticationManager authenticationManager
+//            ,MyUserDetailsService userDetailsService
+//            ,UserRepository userRepository
+//            ,JwtService jwtService){
+//
+//        this.authenticationManager = authenticationManager;
+//        this.userDetailsService = userDetailsService;
+//        this.jwtService = jwtService;
+//        this.userRepository = userRepository;
+//    }
 
     @Override
     public AuthenticationResponse signUp(CreateUserRequest createUserRequest) {

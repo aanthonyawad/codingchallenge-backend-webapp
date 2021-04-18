@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value="/users")
-@Profile(value = {"development", "production"})
 public class UserController {
     @Autowired
     UserService userService;
