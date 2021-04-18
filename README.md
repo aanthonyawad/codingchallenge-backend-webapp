@@ -2,7 +2,7 @@
 This coding challenge is for candidates for the position "Backend Developer - Web Applications"
 
 ## Overview
-Our software lets users search for Patents and Standards, amongst other things.
+Our software lets user search for Patents and Standards, amongst other things.
 ## Tools Used
 
 - open-jdk 8
@@ -51,6 +51,7 @@ http://localhost:8080/swagger-ui.html
 - solr create -c patent
 - solr create -c standard
 - solr create -c declaration
+- solr create -c user
 
 
 ## Contributing

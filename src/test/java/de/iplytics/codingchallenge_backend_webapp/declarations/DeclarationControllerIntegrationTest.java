@@ -2,6 +2,7 @@ package de.iplytics.codingchallenge_backend_webapp.declarations;
 
 
 import com.google.gson.Gson;
+import de.iplytics.codingchallenge_backend_webapp.config.security.SecurityConfigurer;
 import de.iplytics.codingchallenge_backend_webapp.controller.DeclarationController;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.DeclarationRequest;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.DeclarationResponse;
@@ -16,11 +17,14 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(DeclarationController.class)
+@ActiveProfiles(value = "test")
 public class DeclarationControllerIntegrationTest {
 
     @Autowired

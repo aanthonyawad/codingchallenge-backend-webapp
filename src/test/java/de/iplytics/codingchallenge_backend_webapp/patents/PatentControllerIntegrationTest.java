@@ -1,23 +1,35 @@
 package de.iplytics.codingchallenge_backend_webapp.patents;
 
 import com.google.gson.Gson;
+import de.iplytics.codingchallenge_backend_webapp.config.security.SecurityConfigurer;
 import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
+import de.iplytics.codingchallenge_backend_webapp.dto.response.AuthenticationResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.PatentResponse;
 import de.iplytics.codingchallenge_backend_webapp.dto.response.ResponseMessage;
 import de.iplytics.codingchallenge_backend_webapp.exception.InvalidArgumentException;
 import de.iplytics.codingchallenge_backend_webapp.exception.ItemNotFoundException;
+import de.iplytics.codingchallenge_backend_webapp.interfaces.UserService;
 import de.iplytics.codingchallenge_backend_webapp.service.PatentServiceImpl;
+import de.iplytics.codingchallenge_backend_webapp.service.UserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -34,6 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PatentController.class)
+@ActiveProfiles(value = "test")
 class PatentControllerIntegrationTest {
 
     @Autowired
@@ -41,6 +54,7 @@ class PatentControllerIntegrationTest {
 
     @MockBean
     private PatentServiceImpl patentService;
+
 
     @Test
     @Rollback
@@ -53,6 +67,7 @@ class PatentControllerIntegrationTest {
                 .publicationNumber("DE1234A1")
                 .title("Method of making cheese")
                 .build();
+
 
         given(patentService.getSinglePatent(any())).willReturn(patentResponse);
 

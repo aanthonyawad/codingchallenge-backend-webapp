@@ -1,6 +1,7 @@
 package de.iplytics.codingchallenge_backend_webapp.standards;
 
 import com.google.gson.Gson;
+import de.iplytics.codingchallenge_backend_webapp.config.security.SecurityConfigurer;
 import de.iplytics.codingchallenge_backend_webapp.controller.PatentController;
 import de.iplytics.codingchallenge_backend_webapp.controller.StandardController;
 import de.iplytics.codingchallenge_backend_webapp.dto.request.PatentRequest;
@@ -17,10 +18,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -38,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(StandardController.class)
+@ActiveProfiles(value = "test")
 class StandardControllerIntegrationTest {
 
     @Autowired
